@@ -1,0 +1,41 @@
+---
+- name: Configure AI Car Auction application environment
+  hosts: local
+  become: true
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - python3
+          - python3-pip
+          - curl
+        state: present
+        update_cache: true
+
+    - name: Create application user
+      user:
+        name: auctionapp
+        state: present
+        create_home: true
+
+    - name: Create application configuration directory
+      file:
+        path: /opt/ai-car-auction
+        state: directory
+        owner: auctionapp
+        group: auctionapp
+        mode: '0755'
+
+    - name: Create application configuration file
+      copy:
+        dest: /opt/ai-car-auction/config.txt
+        content: |
+          Application: AI Car Auction System
+          Environment: Kubernetes
+          Backend Port: 5000
+          ML Service Port: 5001
+          Damage Service Port: 5002
+        owner: auctionapp
+        group: auctionapp
+        mode: '0644'

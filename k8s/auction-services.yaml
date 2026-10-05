@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auction-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auction-backend
+  template:
+    metadata:
+      labels:
+        app: auction-backend
+    spec:
+      containers:
+        - name: backend
+          image: ai-auction-backend:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+            - name: DAMAGE_SERVICE_URL
+              value: "http://auction-damage:5002"
+            - name: ML_SERVICE_URL
+              value: "http://auction-ml:5001"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auction-backend
+spec:
+  selector:
+    app: auction-backend
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auction-ml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auction-ml
+  template:
+    metadata:
+      labels:
+        app: auction-ml
+    spec:
+      containers:
+        - name: ml
+          image: ai-auction-ml:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5001
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auction-ml
+spec:
+  selector:
+    app: auction-ml
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auction-damage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auction-damage
+  template:
+    metadata:
+      labels:
+        app: auction-damage
+    spec:
+      containers:
+        - name: damage
+          image: ai-auction-damage:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5002
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auction-damage
+spec:
+  selector:
+    app: auction-damage
+  ports:
+    - protocol: TCP
+      port: 5002
+      targetPort: 5002
+  type: ClusterIP
