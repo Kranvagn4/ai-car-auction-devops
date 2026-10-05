@@ -20,7 +20,7 @@ A full-stack vehicle auction platform featuring:
 ### One Command Launch
 
 ```bash
-cd "c:\Users\mohak\OneDrive\Desktop\AI auction portal 2\project"
+cd "c:\Users\your_username\OneDrive\Desktop\AI auction portal 2\project"
 START_ALL_SERVICES.bat
 ```
 
@@ -36,8 +36,6 @@ That's it! All 5 services start automatically:
 ---
 
 ## 📊 Project Status
-
-### Completion: 65%
 
 | Component | Status | Completion |
 |-----------|--------|------------|
