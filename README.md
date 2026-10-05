@@ -449,15 +449,6 @@ START_ALL_SERVICES.bat
 
 ---
 
-## 👥 Team
-
-**Project Lead**: Kiro AI  
-**Backend Development**: Kiro AI  
-**Frontend Development**: Kiro AI  
-**ML Integration**: Kiro AI  
-**Documentation**: Kiro AI  
-**Testing**: Kiro AI  
-
 **Date**: June 19, 2026  
 **Duration**: 3 days (24 hours of focused work)
 
